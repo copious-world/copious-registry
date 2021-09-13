@@ -1,0 +1,27 @@
+{
+  "name": "copious-registry",
+  "version": "0.1.1",
+  "description": "Very common operations for managing and watching directories of entries and keeping entries in memory for searching",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "ava tests/index.js --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/copious-world/copious-registry.git"
+  },
+  "keywords": [
+    "meta-data",
+    "directory",
+    "tracking-list"
+  ],
+  "author": "R. Leddy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/copious-world/copious-registry/issues"
+  },
+  "homepage": "https://github.com/copious-world/copious-registry#readme"
+}
