@@ -1,6 +1,6 @@
 {
   "name": "copious-registry",
-  "version": "0.1.4",
+  "version": "0.4.4",
   "description": "Very common operations for managing and watching directories of entries and keeping entries in memory for searching",
   "main": "index.js",
   "directories": {
@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/copious-world/copious-registry/issues"
   },
-  "homepage": "https://github.com/copious-world/copious-registry#readme"
+  "homepage": "https://github.com/copious-world/copious-registry#readme",
+  "dependencies": {
+    "extra-file-class": "^0.9.12",
+    "xxhash32-node-cmake": "^1.0.5"
+  }
 }
