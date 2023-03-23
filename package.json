@@ -1,6 +1,6 @@
 {
   "name": "copious-registry",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Very common operations for managing and watching directories of entries and keeping entries in memory for searching",
   "main": "index.js",
   "directories": {
