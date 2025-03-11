@@ -1,6 +1,6 @@
 {
   "name": "copious-registry",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "Very common operations for managing and watching directories of entries and keeping entries in memory for searching",
   "main": "index.js",
   "directories": {
@@ -13,6 +13,10 @@
     "type": "git",
     "url": "git+https://github.com/copious-world/copious-registry.git"
   },
+  "funding": {
+    "type" : "GitHub Sponsors",
+    "url" : "https://github.com/sponsors/copious-world"
+  }, 
   "keywords": [
     "meta-data",
     "directory",
