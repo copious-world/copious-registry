@@ -127,9 +127,46 @@ async function test_file_list() {
 
 }
 
+
+function test_registry() {
+
+    const {Registry} = require('../lib/registry')
+    let registry = new Registry({})
+
+    let N = 6
+    let start_date = Date.now()
+    let tracks = []
+    for ( let i = 0; i < N; i++ ) {
+        let R = Math.trunc(Math.random()*10000)
+        let C = Math.trunc(Math.random()*20000)
+        let obj = {
+            "dates" : {
+                "updated" : start_date + R,
+                "created" : start_date + (R - C)
+            },
+            "field" : String.fromCharCode("A".charCodeAt(0) + i),
+            "_tracking" : ("A".charCodeAt(0) + i)
+        }
+
+        obj._tracking = registry.unique_id(obj)
+        tracks.push(obj)
+    }
+
+    for ( let fobj of tracks ) {
+        registry.add_just_one(fobj)    
+    }
+
+    registry.remove_just_one(tracks[1]._tracking)
+
+    console.dir(registry.global_file_list_by)
+    console.dir(registry.global_tracking_map)
+
+}
+
 // ---- ---- ---- ---- ---- ----
 
 test_sort_tables()
 test_file_list()
+test_registry()
 
 // ---- ---- ---- ---- ---- ----
