@@ -126,9 +126,9 @@ The default field of the ID is **\_tracking**.
 
 ## Method Details - Registry
 
-This is the registery, the keeper of objects, most of which will described larger objects elsewhere in most applications. 
+This is the registry, the keeper of objects, most of which will described larger objects elsewhere in most applications. 
 
-The registry keeps object in a single iterable. But, it also may keep a map of types of sorts, lists of the object sorted according to a particular key or functional result. 
+The registry keeps objects in a single iterable. But, it also may keep a map of types of sorts, lists of the objects sorted according to a particular key or functional result. 
 
 Other classes in this module serve to put objects into and remove objects from the list this class keeps. Typically, the classes make a call to `add_just_one` to add an object and `remove_just_one` to remove an object. However, if a class is loading from backup, it may make the assumption that the object is well formed and just call the method belonging to the list, 'add' or 'push'. 
 
@@ -165,8 +165,8 @@ In fact, there calls for removing objects are not directly executed by methods i
 
 **parameters**
 
-* ref_big_list - an array or iterable that will be used to store all the objects available to applications of this class.
-* ref_big_list_by -- a map of sort type to lists; this class will create the application storage type for these lists and place objects in these according to sorts determined by the application or defaults. 
+* `ref_big_list` - an array or iterable that will be used to store all the objects available to applications of this class.
+* `ref_big_list_by` -- a map of sort types to lists; this class will create the application storage type for these lists and place objects in these according to sorts determined by the application or defaults. 
 
 ----
 
@@ -261,7 +261,7 @@ Examines every object in the global file list and makes sure that it is accounte
 
 #### **`update_global_file_list_quotes_by`**
 
-This method has a default behavior for when the application does not use a FileList class. If the application just uses arrays, then this then this method calls on the sort methods and touches the score fields of the objects.
+This method has a default behavior for when the application does not use a FileList class. If the application just uses arrays, then this method calls on the sort methods and touches the score fields of the objects.
 
 This method calls on the sorting methods for soring by dates. It sets all scores to 1.0 if the score field is abscent from the object. Also, it looks for the lists mapped by the ***[field]*** parameters needed for `sort_by_field`.
 
