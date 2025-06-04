@@ -16,7 +16,32 @@ For use in node.js projects:
 npm install -s copious-registry
 ```
 
-### Purpose
+### about hashing
+
+There is an implicit dependency on an externally specified (configured)
+hash function. **xxhash32-node-cmake** works on some of my machines. But, there are some build problems that have to be addressed with node.js 24. So, as a default **xxhash-addon** will be required. 
+
+The **xxhash32-node-cmake** may be specified by adding the field, **xxhash** to the configuration object, *conf*, passed during construction. Otherwise, **xxhash-addon** will be loaded.
+
+Neither module will be installed with the installation of this module. So, in order to access them, they should be installed gloabally as such:
+
+```
+npm install -g xxhash32-node-cmake
+```
+
+and/or
+
+```
+npm install -g xxhash32-addon
+```
+
+If the build is not in sync with your version of Linux, the other build may be.
+
+These should be installed prior to using the registy class.
+
+Originally, I made xxhash32-node-cmake to use the cmake module build and to use nan. Older versions worked fine. The mos recent is having some problems. 
+
+## Purpose
 
 The original purpose of this module was to provide interfaces for handling receipt and management of publication of meta data. The meta data are just JSON objects. So, one may think of this module as a small collection of utilities classes that keep references, JSON object, to other data.
 
