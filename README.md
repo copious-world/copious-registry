@@ -26,12 +26,12 @@ Client application/descendants can request sorts, searches, pruning, caching, et
 
 This is a live object store. It provides basic disk based persistence as a default.
 
-[notes on refactoring](file:./docs/refactoring.md)
+[notes on refactoring](docs/refactoring.md)
 
 ## Repositories and Packages:
 
 [npm package](https://www.npmjs.com/package/copious-registry)
-
+    
 [github](https://github.com/copious-world/copious-registry)
 
 
