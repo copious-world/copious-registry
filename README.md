@@ -35,7 +35,6 @@ This is a live object store. It provides basic disk based persistence as a defau
 [github](https://github.com/copious-world/copious-registry)
 
 
-
 ## Configurations
 
 This module is written with configuration in mind.  
@@ -45,8 +44,13 @@ versions of features/operations. Default operations can get the job done but the
 
 Because this stack is configurable, it can be used as a communication framework managing the flow of information in and out of the tables, while providing calls by client code to sort and search.
 
-More information on configuration will be given below.
+*More information on configuration will be given below.*
 
+### Some Required Fields
+
+While many things can be configured, the objects that this stack processes will have some required fields. These fields are not optional.
+
+The full discussion for required fields is given below: [required-fileds](#required_fields)
 
 
 ## Install
@@ -81,7 +85,7 @@ If the build is not in sync with your version of Linux, the other build may be.
 
 These should be installed prior to using the registy class.
 
-Originally, I made xxhash32-node-cmake to use the cmake module build and to use nan. Older versions worked fine. The mos recent is having some problems. 
+Originally, I made xxhash32-node-cmake to use the cmake module build and to use nan. Older versions worked fine. The mos recent is having some problems.
 
 
 ### Basic Features
@@ -92,10 +96,15 @@ The registry provides access to sorting of the stored list. And, the application
 
 Items find their way into the lists by two processes.
 
-1. watch process - The subject of DirWatcherHandler, a class that watches for new objects that arrive into the directories controlled by the application using these classes. DirWatcherHandler adds object to the storage object containing the object list.
+1. watch process - The subject of **Watcher**, a class that watches for new objects that arrive into the directories controlled by the application using these classes or through pub/sub mechanisms. **Watcher** adds object to the storage object containing the object list.
 2. loading at startup - The class ObjFileDirLoader provides a method that loads objects from a diretory, using methods from [extra-file-classes](https://www.npmjs.com/package/extra-file-class).
 
-## \_tracking  *(reserved field name)*
+
+
+<a name="required_fields" > </a>
+## Required and Reserved Object Fields
+
+### \_tracking  *(reserved field name)*
 
 This is the name of the identifier field that is used throughout. Some thought has been given to making this field configurable. But, that may be treated as the subject of another set of classes. 
 
@@ -105,7 +114,7 @@ The main requirement of the field `_tracking` is that it must be a unique ID, wh
 
 It is also important that `_tracking` be on the top level of an object. So, if one were to inspect a JSON file containing an object used in this application one should see `_tracking` as a field not too far removed from the initial brace. It's value will likely be some base64 representation of a large number.
 
-## dates *(reserved field name)*
+### dates *(reserved field name)*
 
 It is assumed that the top level of the objects handled by these classes will have a field ***dates***.
 
@@ -125,7 +134,7 @@ Here is an example:
 
 When the object is added, the class instance will create a date for the object if it does not have one. There is an assumption that it is better for applications generating the objects to create the dates, as they will have a better handle on the time they perform their operations.
 
-## \_x\_entry *(reserved field name)*
+### \_x\_entry *(reserved field name)*
 
 This is one more top level field. It's primary purpose is to sequence data. But, currently a hash of the data is being placed in the \_x\_entry field by default. 
 
@@ -133,18 +142,19 @@ Clients consuming lists returned as searches or as complete DB listings may over
 
 This field is used in serializing queries in dependent searching modules.
 
-## score *(may be reserved field name)*
+### score *(may be reserved field name)*
 
 This module sets the score field of new objects to 1.0 if the filed is not present. The method `sort_by_score` uses it. So, if an application whishes to use the method `sort_by_score`, it may control the field on the top level of the object
 
-## \_xxzz\_removed *(reserved field name)*
+### \_xxzz\_removed *(reserved field name)*
 
 This is a field that is added to the object when it is being removed. The object is being taken out of tables maintained by the Registry instance. But, the Registry does not know how to remove it from other data structures. Instead, it calls a method `app_specific_file_removal` after the object is marked with this field.
 
 ## Classes Provide
 
 * **Registry**
-* **DirWatcherHandler**
+* **Watcher**
+* **WatchFilter**
 * **ObjFileDirLoader**
 * **FileLists**
 
@@ -196,7 +206,7 @@ Other classes in this module serve to put objects into and remove objects from t
 #### **`constructor `**
 
 Sets up hashing for when it is needed. Initializes the global tables. If the configuration has the field, `file_list_class`, it will attempt to use the application defined file list object for storing its objects. The member variable, `global_file_list`, will be set to an instance of the supplied class, which must have the properties of an iterable.
-		
+
 **parameters**
 
 * config -- an object with configuration fields
