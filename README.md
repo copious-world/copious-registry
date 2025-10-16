@@ -3,10 +3,51 @@
 
 This module provides several classes that may occur commonly together.
 
-1. **Registery** - the manager of a table of objects
-2. **DirWatcherHandler** - a class that watches for the arrival of new objects
-3. **ObjFileDirLoader** - a class that loads data at the start of execution and saves it before execution ends
-4. **FileLists** - a fairly abstract class that provides an interface implementations may follow for interfacing storage access of objects.
+1. **Registery** - the manager of a table of objects with sorting, searching, and some index tracking.
+2. **Watcher** - a class that watches for the arrival of new objects
+3. **WatchFilter** - a class that the Watcher uses to determine is an object should be included in the tables
+4. **ObjFileDirLoader** - a class that loads data at the start of execution and saves it before execution ends
+5. **FileLists** - a fairly abstract class that provides an interface that implementations may follow for interfacing access to storage of objects.
+
+
+#### changes:
+
+> 1. The class **DirWatcherHandler** is being called Watcher. The new class is more abstract, allowing one or more types of object watching, some disk based, some pub/sub based. 
+> 2. The **WatchFilter** class is new, and implements default behavior to check on the data being included in the tables. Its addition serves to allow configured classes that filter objects according to application rules.
+> 3. Crash and reset capability: this is the subject of a descendant class, but the main classes submits methods to a configured crash/shutdown handler on startup. 
+> 4. Interval backup: As in the case of crash and reset, the interval backup can be setup by providing backup methods to a configured state backup hankder on startup.
+
+
+## Purpose
+
+These classes allow for fielding new data objects and having them included in indexes.
+
+Client application/descendants can request sorts, searches, pruning, caching, etc. 
+
+This is a live object store. It provides basic disk based persistence as a default.
+
+[notes on refactoring](file:./docs/refactoring.md)
+
+## Repositories and Packages:
+
+[npm package](https://www.npmjs.com/package/copious-registry)
+
+[github](https://github.com/copious-world/copious-registry)
+
+
+
+## Configurations
+
+This module is written with configuration in mind.  
+
+Storage classes, sorting operations, object injestions, and more can be configured to use the best performing 
+versions of features/operations. Default operations can get the job done but they are bound by JavaScript performance.
+
+Because this stack is configurable, it can be used as a communication framework managing the flow of information in and out of the tables, while providing calls by client code to sort and search.
+
+More information on configuration will be given below.
+
+
 
 ## Install
 
@@ -35,19 +76,13 @@ and/or
 npm install -g xxhash32-addon
 ```
 
+
 If the build is not in sync with your version of Linux, the other build may be.
 
 These should be installed prior to using the registy class.
 
 Originally, I made xxhash32-node-cmake to use the cmake module build and to use nan. Older versions worked fine. The mos recent is having some problems. 
 
-## Purpose
-
-The original purpose of this module was to provide interfaces for handling receipt and management of publication of meta data. The meta data are just JSON objects. So, one may think of this module as a small collection of utilities classes that keep references, JSON object, to other data.
-
-The objects that refer to other data may provide protocol based paths, URLs, to assets which may be fetched by the protocols. The paths may be modules that may be loaded by node.js. 
-
-The JSON object may store data themselves. However, the application developer should keep in mind that the classes provided here make some attempt to keep all the objects in memory. Typically, the data refers to some larger object BLOB that can be accessed when it is needed. One use has objects refering to the data with IDs (Intergalactic IDs) that can be used to access BLOB assets over a repository bridge.
 
 ### Basic Features
 
