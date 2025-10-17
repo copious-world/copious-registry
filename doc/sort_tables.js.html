@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: sort_tables.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: sort_tables.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//
+const NOISY = false
+
+/**
+ * SortedTables
+ * 
+ */
+
+class SortedTables {
+
+    constructor(conf) {}
+
+    // ORDERING
+    // 
+
+    /**
+     * sort_by_updated
+     * 
+     * (1)
+     * Order a set of record by the time they were updated... (they must include a 'dates' structure field)
+     * 
+     * 
+     * @param {object} iterable - JavasScript class instance with *iteratable* interface conformance
+     * @returns 
+     */
+    sort_by_updated(iterable) {
+        let results = []
+        if ( Array.isArray(iterable) ) {
+            results = iterable.sort((a,b) => {
+                if ( b.dates &amp;&amp; a.dates ) {
+                    if ( b.dates.updated &amp;&amp; a.dates.updated ) {
+                        return(b.dates.updated - a.dates.updated)
+                    }
+                }
+                return 0
+            })    
+        } else {
+            try {
+                let vals = [... iterable.values()]  // In the cheap implementation, just get an array of values and then sort the array
+                return this.sort_by_updated(vals)
+            } catch (e) {
+                if ( NOISY ) console.log(e)
+            }
+        }
+        return results
+    }
+
+    //
+
+    /**
+     * sort_by_created
+     * 
+     * (2)
+     * Order a set of records by the time they were created... (they must include a 'dates' structure field)
+     * 
+     * @param {object} iterable - JavasScript class instance with *iteratable* interface conformance
+     * @returns 
+     */
+    sort_by_created(iterable) {
+        let results = []
+        if ( Array.isArray(iterable) ) {
+            results = iterable.sort((a,b) => {
+                if ( b.dates &amp;&amp; a.dates ) {
+                    if ( b.dates.created &amp;&amp; a.dates.created ) {
+                        return(b.dates.created - a.dates.created)
+                    }
+                }
+                return 0
+            })
+        } else {
+            try {
+                let vals = [... iterable.values()]  // In the cheap implementation, just get an array of values and then sort the array
+                return this.sort_by_created(vals)
+            } catch (e) {
+                if ( NOISY ) console.log(e)
+            }
+        }
+        return results
+    }
+
+
+    /**
+     * sort_by_created
+     * 
+     * (3)
+     * Order a set of records by a monotonic score... (they must include a 'score' numeric field)
+     * 
+     * @param {object} iterable - JavasScript class instance with *iteratable* interface conformance
+     * @returns 
+     */
+    sort_by_score(iterable) {   // &lt;- an array
+        let results = []
+        if ( Array.isArray(iterable) ) {
+            results = iterable.sort((a,b) => {
+                return(b.score - a.score)
+            })
+        } else {
+            try {
+                let vals = [... iterable.values()]  // In the cheap implementation, just get an array of values and then sort the array
+                return this.sort_by_score(vals)
+            } catch (e) {
+                if ( NOISY ) console.log(e)
+            }
+        }
+        return results
+    }
+
+
+    /**
+     * sort_by_field
+     * 
+     * (4)
+     * Order a set of records by a field having monotonic properties... (they must include a 'field' numeric field)
+     * 
+     * @param {object} iterable - JavasScript class instance with *iteratable* interface conformance
+     * @returns 
+     */
+    sort_by_field(iterable,field) {   // &lt;- an array &lt;-- a string for a field name having numeric type
+        let results = []
+        if ( Array.isArray(iterable) ) {
+            results = iterable.sort((a,b) => {
+                return(b[field] - a[field])
+            })
+        } else {
+            try {
+                let vals = [... iterable.values()]  // In the cheap implementation, just get an array of values and then sort the array
+                return this.sort_by_score(vals)
+            } catch (e) {
+                if ( NOISY ) console.log(e)
+            }
+        }
+        return results
+    }
+
+    /**
+     * sort_by_fn
+     * 
+     * (5)
+     * Order a set of records by a monotonic score... (they must include a 'score' numeric field)
+     * 
+     * @param {object} iterable - JavasScript class instance with *iteratable* interface conformance
+     * @returns 
+     */
+
+    sort_by_fn(iterable,func) {   // &lt;- an array &lt;-- to parameter func(store type,store type)
+        let results = []
+        if ( typeof func === 'function' ) {
+            if ( Array.isArray(iterable) ) {
+                results = iterable.sort(func)
+            } else {
+                try {
+                    let vals = [... iterable.values()]  // In the cheap implementation, just get an array of values and then sort the array
+                    return this.sort_by_fn(vals,func)
+                } catch (e) {
+                    if ( NOISY ) console.log(e)
+                }
+            }    
+        }
+        return results   // did not sort 
+    }
+    
+
+    // END OF ORDERING
+    
+}
+
+
+module.exports = SortedTables
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DirWatcherHandler.html">DirWatcherHandler</a></li><li><a href="FileLists.html">FileLists</a></li><li><a href="ObjFileDirLoader.html">ObjFileDirLoader</a></li><li><a href="Registry.html">Registry</a></li><li><a href="SortedTables.html">SortedTables</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Oct 16 2025 16:32:09 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

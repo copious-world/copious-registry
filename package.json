@@ -7,8 +7,10 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "ava tests/index.js --verbose"
+    "test": "ava tests/index.js --verbose",
+    "gen-docs": "jsdoc --configure ./tools/jsdoc.conf --verbose"
   },
+  "types": "./ts/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/copious-world/copious-registry.git"
@@ -30,5 +32,9 @@
   "homepage": "https://github.com/copious-world/copious-registry#readme",
   "dependencies": {
     "extra-file-class": "^0.9.20"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^9.1.3",
+    "minami": "^1.2.3"
   }
 }

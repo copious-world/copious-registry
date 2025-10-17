@@ -26,7 +26,7 @@ Client application/descendants can request sorts, searches, pruning, caching, et
 
 This is a live object store. It provides basic disk based persistence as a default.
 
-[notes on refactoring](docs/refactoring.md)
+[notes on refactoring](doc/refactoring.md)
 
 ## Repositories and Packages:
 
